@@ -2,7 +2,7 @@
 
 csmControl::csmControl(Game* game){
 	this->game = game;
-	path = "./Manual/ChessManual.csm";
+	path = "./Notation/ChessNotation.csm";
 	csmView* oldview = csmview;
 	csmview = new csmView();
 	delete oldview;
@@ -18,13 +18,29 @@ std::vector<csmData> csmControl::GetcsmManual(int ID) {
 }
 void csmControl::FileInput() {
 	csm.open(path, std::ios::in);
-	std::string name;
+	if (!csm.is_open()) std::cout << "Error\n";
 	std::string obj;
-	for (int i = 0; csm>>name and i < 100; i++) {
+	std::string name;
+	for (int i = 0; csm>>obj and i < 100; i++) {
+		name = "";
+		while (csm >> obj) {
+			name += obj;
+			if (obj[obj.length() - 1] == ']') break;
+		}
+		name = name.substr(1, name.length() - 3);
 		filename.push_back(name);
+		for (int i = 0; i < 6; i++) {
+			name = "";
+			while (csm >> obj) {
+				name += obj;
+				if (obj[obj.length() - 1] == ']') break;
+			}
+			name = name.substr(1, name.length() - 3);
+		}
 		std::vector<csmData> Manual;
 		csmData tmp;
-		while (csm >> obj and obj!="#") {
+		while (csm >> obj) {
+			if (obj == "1-0" or obj == "0-1" or obj == "1/2-1/2") break;
 			if ('0' <= obj[0] and obj[0] <= '9') {
 
 				tmp.No = obj;

@@ -37,7 +37,7 @@ StatusID WindowControl::Run() {
 			PromotionWindow();
 		}
 		if (status == CSM) {
-			sf::RenderWindow csmWindow(sf::VideoMode(1200, 1200), "ChessManual", (sf::Style::Close));
+			sf::RenderWindow csmWindow(sf::VideoMode(1200, 1200), "ChessNotation", (sf::Style::Close));
 			int tmp= csmcontrol->Run(csmWindow);
 			ManualID = tmp;
 			if(ManualID!=0)
