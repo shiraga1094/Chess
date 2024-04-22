@@ -54,7 +54,8 @@ void csmControl::FileInput() {
 				Manual.push_back(tmp);
 			}
 		}
-		Manual.push_back(tmp);
+		if(tmp.BlackMove=="-1")
+			Manual.push_back(tmp);
 		csmManual.push_back(Manual);
 	}
 	csm.close();
