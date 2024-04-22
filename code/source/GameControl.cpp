@@ -122,8 +122,9 @@ void Game::ManualMove(std::string MOVE) {
 			break;
 		default:
 			pos = GetManualPos(MOVE);
-			for (int r = 0; r < 8; r++) {
-				for (int c = 0; c < 8; c++) {
+			bool K = 0;
+			for (int r = 0; r < 8 and !K; r++) {
+				for (int c = 0; c < 8 and !K; c++) {
 					if (MOVE[0]=='N' and Board->GetPieceID(r, c) != White_Knight and Board->GetPieceID(r, c) != Black_Knight)
 						continue;
 					if (MOVE[0] == 'B' and Board->GetPieceID(r, c) != White_Bishop and Board->GetPieceID(r, c) != Black_Bishop)
@@ -143,6 +144,7 @@ void Game::ManualMove(std::string MOVE) {
 					if (pos[1] != -1 and pos[1] != c) continue;
 					if (Board->isMoveValid(r, c, pos[2], pos[3], *Board)) {
 						Move(r, c, pos[2], pos[3]);
+						K = 1;
 					}
 				}
 			}

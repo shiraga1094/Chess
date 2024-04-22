@@ -111,7 +111,7 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 			}
 			if (ManualsetID % 2 == 1)
 				game->ManualMove(csmManual[i].WhiteMove);
-			std::cout << Manualscroll * 12 + ManualsetID << '\n';
+			//std::cout << Manualscroll * 12 + ManualsetID << '\n';
 		}
 		else {
 			ManualsetID = tmp;
