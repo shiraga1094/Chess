@@ -153,6 +153,7 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 				status = Start;
 			}
 			preManualsetID = Manualscroll * 12 + ManualsetID;
+			isChosen = 0;
 		}
 		else {
 			ManualsetID = tmp;
