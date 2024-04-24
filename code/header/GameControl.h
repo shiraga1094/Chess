@@ -11,8 +11,11 @@ class Game {
 private:
 	BoardControl* Board;
 	bool Turn; //0 Black 1 White
-	bool _isBlackWin, _isWhiteWin;
+	int _isBlackWin, _isWhiteWin;
 	bool _isStaleMate, _isMove_50;
+	int _isBlackChecked, _isWhiteChecked;
+	int _isBlackKingCastling, _isWhiteKingCastling;
+	int _isBlackQueenCastling, _isWhiteQueenCastling;
 public:
 	Game();
 	BoardControl getBoard();

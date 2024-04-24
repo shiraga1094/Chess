@@ -32,8 +32,9 @@ private:
 	float PiecePosBx, PiecePosBy;
 	int PieceBx, PieceBy, PiecetoX, PiecetoY;
 	int ManualID;
-	int ManualsetID, Manualscroll;
+	int ManualsetID, Manualscroll, preManualsetID;
 	int fakeManualscroll;
+	int selfmove;
 	std::vector<csmData> csmManual;
 	StatusID status;
 	ID promotionID;

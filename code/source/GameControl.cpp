@@ -11,12 +11,18 @@ Game::Game() {
 	delete oldBoard;
 	Board->Board_Init();
 	Turn = 1;
-	_isBlackWin = _isWhiteWin = 0;
+	_isBlackWin = _isWhiteWin = -1;
 	_isStaleMate = _isMove_50 = 0;
+	_isBlackChecked = _isWhiteChecked = -1;
+	_isBlackKingCastling = _isWhiteKingCastling = -1;
+	_isBlackQueenCastling = _isWhiteQueenCastling = -1;
 }
 void Game::Undo() {
 	_isBlackWin = _isWhiteWin = 0;
 	_isStaleMate = _isMove_50 = 0;
+	_isBlackChecked = _isWhiteChecked = -1;
+	_isWhiteKingCastling = _isBlackKingCastling = -1;
+	_isWhiteQueenCastling = _isBlackQueenCastling = -1;
 	if (Board->Undo()) ChangeTurn();
 }
 bool Game::isTurn() {
@@ -29,19 +35,23 @@ bool Game::isMoveValid(int X, int Y, int toX, int toY) {
 }
 void Game::Move(int X, int Y, int toX, int toY, bool Castling) {
 	Board->Move(X, Y, toX, toY, Castling);
+	_isWhiteWin = _isBlackWin = -1;
+	_isWhiteChecked = _isBlackChecked = -1;
+	_isWhiteKingCastling = _isBlackKingCastling = -1;
+	_isWhiteQueenCastling = _isBlackQueenCastling = -1;
 	ChangeTurn();
 }
 void Game::ChangeTurn() {
 	Turn ^= 1;
 }
 bool Game::isBlackWin() {
-	if (_isBlackWin) return 1;
-	_isBlackWin=Board->isBlackCheckMate(*Board);
+	if (_isBlackWin==-1)
+		_isBlackWin=Board->isBlackCheckMate(*Board);
 	return _isBlackWin;
 }
 bool Game::isWhiteWin() {
-	if (_isWhiteWin) return 1;
-	_isWhiteWin=Board->isWhiteCheckMate(*Board);
+	if (_isWhiteWin==-1)
+		_isWhiteWin=Board->isWhiteCheckMate(*Board);
 	return _isWhiteWin;
 }
 bool Game::isStaleMate() {
@@ -56,22 +66,28 @@ void Game::Init() {
 	Board->Board_Init();
 }
 bool Game::isBlackChecked() {
-	return Board->isBlackChecked(*Board);
+	if (_isBlackChecked == -1) _isBlackChecked = Board->isBlackChecked(*Board);
+	return _isBlackChecked;
 }
 bool Game::isWhiteChecked() {
-	return Board->isWhiteChecked(*Board);
+	if (_isWhiteChecked == -1) _isWhiteChecked = Board->isWhiteChecked(*Board);
+	return _isWhiteChecked;
 }
 bool Game::isBlackKingCastling() {
-	return Board->isBlackKingCastling(*Board);
+	if(_isBlackKingCastling == -1) _isBlackKingCastling = Board->isBlackKingCastling(*Board);
+	return _isBlackKingCastling;
 }
 bool Game::isBlackQueenCastling() {
-	return Board->isBlackQueenCastling(*Board);
+	if (_isBlackQueenCastling == -1) _isBlackQueenCastling = Board->isBlackQueenCastling(*Board);
+	return _isBlackQueenCastling;
 }
 bool Game::isWhiteKingCastling() {
-	return Board->isWhiteKingCastling(*Board);
+	if (_isWhiteKingCastling == -1) _isWhiteKingCastling = Board->isWhiteKingCastling(*Board);
+	return _isWhiteKingCastling;
 }
 bool Game::isWhiteQueenCastling() {
-	return Board->isWhiteQueenCastling(*Board);
+	if (_isWhiteQueenCastling == -1) _isWhiteQueenCastling = Board->isWhiteQueenCastling(*Board);
+	return _isWhiteQueenCastling;
 }
 std::vector<pair> Game::getPossibleMove(int X, int Y) {
 	return Board->getPossibleMove(X, Y, *Board);

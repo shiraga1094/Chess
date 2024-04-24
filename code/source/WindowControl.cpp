@@ -8,7 +8,7 @@ WindowControl::WindowControl(sf::RenderWindow& window):MainWindow(window){
 	isMouseHold = isDrag= 0;
 	isDragPiece = nullptr;
 	ManualID = Manualscroll = NULL;
-	ManualsetID = -1;
+	ManualsetID = preManualsetID = -1;
 	PieceBx = PieceBy = PiecetoX = PiecetoY = NULL;
 	PiecePosBx = PiecePosBy = NULL;
 }
@@ -24,7 +24,8 @@ void WindowControl::Init() {
 	csmcontrol = new csmControl(game);
 	delete oldcsmcontrol;
 	isDrag = isChosen = 0;
-	
+	preManualsetID = -1;
+	selfmove = 0;
 	status = Start;
 }
 StatusID WindowControl::Run() {
@@ -44,6 +45,7 @@ StatusID WindowControl::Run() {
 				csmManual = csmcontrol->GetcsmManual(ManualID-1);
 			ManualsetID = Manualscroll = 0;
 			fakeManualscroll = -1;
+			preManualsetID = -1;
 			status = Start;
 		}
 		MouseHoldEvent();
@@ -71,9 +73,12 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 	int mouseY = sf::Mouse::getPosition(MainWindow).y;
 	isMouseHold = 1;
 	if (view->isInUndoButton(mouseX, mouseY)) {
-		game->Undo();
-		isChosen = 0;
-		status = Start;
+		if (selfmove) {
+			game->Undo();
+			isChosen = 0;
+			status = Start;
+			selfmove--;
+		}
 		return;
 	}
 	else if (view->isInResetButton(mouseX, mouseY)) {
@@ -103,15 +108,47 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 		int len = csmManual.size()*2 - (csmManual.back().BlackMove == "-1");
 		if (Manualscroll * 12 + ManualsetID <= len) {
 			fakeManualscroll = Manualscroll;
-			Init();
-			int i;
-			for (i = 0; i < Manualscroll * 6 + ManualsetID/2; i++) {
-				game->ManualMove(csmManual[i].WhiteMove);
-				game->ManualMove(csmManual[i].BlackMove);
+			int nowManualsetID = Manualscroll * 12 + ManualsetID;
+			//Init();
+			if (preManualsetID == -1) {
+				Init();
+				selfmove = 0;
+				int i;
+				for (i = 0; i < nowManualsetID/2; i++) {
+					game->ManualMove(csmManual[i].WhiteMove);
+					game->ManualMove(csmManual[i].BlackMove);
+				}
+				if (nowManualsetID % 2 == 1)
+					game->ManualMove(csmManual[i].WhiteMove);
 			}
-			if (ManualsetID % 2 == 1)
-				game->ManualMove(csmManual[i].WhiteMove);
-			//std::cout << Manualscroll * 12 + ManualsetID << '\n';
+			else if (nowManualsetID > preManualsetID) {
+				for (int s = 0; s < selfmove; s++) {
+					game->Undo();
+				}
+				selfmove = 0;
+				int i = preManualsetID;
+				for (i; i < nowManualsetID; i++) {
+					if (i % 2 == 0) game->ManualMove(csmManual[i / 2].WhiteMove);
+					else game->ManualMove(csmManual[i / 2].BlackMove);
+				}
+			}
+			else if(nowManualsetID < preManualsetID){
+				int i = preManualsetID;
+				for (int s = 0; s < selfmove; s++) {
+					game->Undo();
+				}
+				selfmove = 0;
+				for (i; i > nowManualsetID; i--) {
+					game->Undo();
+				}
+			}
+			else {
+				for (int s = 0; s < selfmove; s++) {
+					game->Undo();
+				}
+				selfmove = 0;
+			}
+			preManualsetID = Manualscroll * 12 + ManualsetID;
 		}
 		else {
 			ManualsetID = tmp;
@@ -127,7 +164,7 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 		}
 		isChosen = 0;
 		if (game->isMoveValid(PieceBx, PieceBy, PiecetoX, PiecetoY)) {
-			isDrag = 0;
+			isDrag = 0; selfmove++;
 			if (game->getBoard().GetPieceID(PieceBx, PieceBy) == Black_King) {
 				if (game->isBlackKingCastling() and PiecetoY - PieceBy == 2) {
 					game->Move(0, 7, 0, 5);
@@ -208,7 +245,7 @@ void WindowControl::isMouseButtonReleased(sf::Event event) {
 	if (isDrag) {
 		isDrag = 0;
 		if (game->isMoveValid(PieceBx, PieceBy, PiecetoX, PiecetoY)) {
-			isChosen = 0;
+			isChosen = 0; selfmove++;
 			if (game->getBoard().GetPieceID(PieceBx, PieceBy) == Black_King) {
 				if (game->isBlackKingCastling() and PiecetoY-PieceBy==2) {
 					game->Move(0, 7, 0, 5);
