@@ -126,6 +126,7 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 					game->Undo();
 				}
 				selfmove = 0;
+				status = Start;
 				int i = preManualsetID;
 				for (i; i < nowManualsetID; i++) {
 					if (i % 2 == 0) game->ManualMove(csmManual[i / 2].WhiteMove);
@@ -138,15 +139,18 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 					game->Undo();
 				}
 				selfmove = 0;
+				status = Start;
 				for (i; i > nowManualsetID; i--) {
 					game->Undo();
 				}
+				status = Start;
 			}
 			else {
 				for (int s = 0; s < selfmove; s++) {
 					game->Undo();
 				}
 				selfmove = 0;
+				status = Start;
 			}
 			preManualsetID = Manualscroll * 12 + ManualsetID;
 		}
