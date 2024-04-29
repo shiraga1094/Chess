@@ -36,6 +36,12 @@ private:
 	std::vector<sf::Text> Manualcontent;
 	sf::CircleShape ManualLeftButton, ManualRightButton;
 	sf::RectangleShape ManualChosen;
+	sf::Sprite ManualNextMoveButton;
+	sf::Sprite ManualPreviousMoveButton;
+	sf::RectangleShape ManualNextMoveBg;
+	sf::RectangleShape ManualPreviousMoveBg;
+	sf::Sprite ManualPlayButton, ManualPauseButton;
+	sf::RectangleShape ManualPlaybg;
 
 public:
 	View(sf::RenderWindow&, Game*);
@@ -47,6 +53,7 @@ public:
 	void DrawSubWindow(sf::RenderWindow& SubWindow);
 	void DrawText(bool isRotate);
 	void DrawButton(int X, int Y, bool isPressed, bool isDrag);
+	void DrawManaulPlayButton(int X, int Y, bool isPressed, int isManaulPlay);
 	void DrawManual(std::vector<csmData> csmManual, int Manualscroll, int ManualsetID);
 	std::vector<sf::Sprite>& getSpriteItem();
 	std::vector<sf::Sprite>& getPromotionItem();
@@ -57,6 +64,9 @@ public:
 	bool isInManualLeftButton(int X, int Y);
 	bool isInManualRightButton(int X, int Y);
 	int isInManualWindow(int X, int Y);
+	bool isInManualNextMoveButton(int X, int Y);
+	bool isInManualPreviousMoveButton(int X, int Y);
+	bool isInManualPlayButton(int X, int Y, int isManaulPlay);
 };
 
 #endif

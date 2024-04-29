@@ -33,10 +33,27 @@ void View::Init(bool isRotate) {
 	Manualtext = input->GetManualtext(2);
 	ManualLeftButton = ManualRightButton = input->GetManualButton();
 	ManualLeftButton.rotate(270);
-	ManualLeftButton.setPosition(1380, 945);
+	ManualLeftButton.setPosition(1310, 945);
 	ManualRightButton.rotate(90);
-	ManualRightButton.setPosition(1680, 885);
+	ManualRightButton.setPosition(1730, 885);
 	ManualChosen = input->GetManualChosen();
+	ManualNextMoveButton = input->GetManualNextMoveButton();
+	ManualNextMoveButton.setPosition(1590, 883);
+	ManualNextMoveButton.setScale(0.12, 0.12);
+	ManualPreviousMoveButton = input->GetManualPreviousButton();
+	ManualPreviousMoveButton.setPosition(1390, 883);
+	ManualPreviousMoveButton.setScale(0.12, 0.12);
+	ManualNextMoveBg = ManualPreviousMoveBg = sf::RectangleShape(sf::Vector2f(40, 70));
+	ManualNextMoveBg.setPosition(1600, 879);
+	ManualPreviousMoveBg.setPosition(1403, 879);
+	ManualPlayButton = input->GetManualPlayButton();
+	ManualPlayButton.setPosition(1487, 879);
+	ManualPlayButton.setScale(0.118, 0.118);
+	ManualPauseButton = input->GetManualPauseButton();
+	ManualPauseButton.setPosition(1492, 884);
+	ManualPauseButton.setScale(0.1, 0.1);
+	ManualPlaybg = sf::RectangleShape(sf::Vector2f(65, 65));
+	ManualPlaybg.setPosition(1489, 881);
 }
 void View::Update(bool isRotate) {
 	BoardControl Board = game->getBoard();
@@ -196,6 +213,9 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 	InputBackground.setFillColor(sf::Color(0, 0, 0, 1));
 	ManualLeftButton.setFillColor(sf::Color(126, 192, 238));
 	ManualRightButton.setFillColor(sf::Color(126, 192, 238));
+	ManualNextMoveBg.setFillColor(sf::Color(0, 0, 0, 1));
+	ManualPreviousMoveBg.setFillColor(sf::Color(0, 0, 0, 1));
+
 	if (isInResetButton(X, Y)) {
 		ResetButton.setFillColor(sf::Color(255, 231, 186));
 		if (isPressed and !isDrag) ResetButton.setFillColor(sf::Color(205, 186, 150));
@@ -221,6 +241,14 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 		if (isPressed and !isDrag) ManualRightButton.setFillColor(sf::Color(108, 166, 205));
 		else ManualRightButton.setFillColor(sf::Color(135, 206, 255));
 	}
+	else if (isInManualNextMoveButton(X, Y)) {
+		if (isPressed and !isDrag) ManualNextMoveBg.setFillColor(sf::Color(190, 190, 190));
+		else ManualNextMoveBg.setFillColor(sf::Color(211, 211, 211));
+	}
+	else if (isInManualPreviousMoveButton(X, Y)) {
+		if (isPressed and !isDrag) ManualPreviousMoveBg.setFillColor(sf::Color(190, 190, 190));
+		else ManualPreviousMoveBg.setFillColor(sf::Color(211, 211, 211));
+	}
 	MainWindow.draw(UndoButton);
 	MainWindow.draw(input->GetUndotxt());
 	MainWindow.draw(ResetButton);
@@ -231,6 +259,26 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 	MainWindow.draw(Input_Button);
 	MainWindow.draw(ManualLeftButton);
 	MainWindow.draw(ManualRightButton);
+	MainWindow.draw(ManualNextMoveBg);
+	MainWindow.draw(ManualPreviousMoveBg);
+	MainWindow.draw(ManualNextMoveButton);
+	MainWindow.draw(ManualPreviousMoveButton);
+	
+}
+void View::DrawManaulPlayButton(int X, int Y, bool isPressed, int isManaulPlay) {
+	if (isManaulPlay == -1) return;
+	ManualPlaybg.setFillColor(sf::Color(0, 0, 0, 1));
+	if (isInManualPlayButton(X, Y, isManaulPlay)) {
+		if (isPressed) ManualPlaybg.setFillColor(sf::Color(190, 190, 190));
+		else ManualPlaybg.setFillColor(sf::Color(211, 211, 211));
+	}
+	MainWindow.draw(ManualPlaybg);
+	if (isManaulPlay==1) {
+		MainWindow.draw(ManualPauseButton);
+	}
+	else {
+		MainWindow.draw(ManualPlayButton);
+	}
 }
 std::vector<sf::Sprite>& View::getSpriteItem() {
 	return SpriteItem;
@@ -262,4 +310,18 @@ int View::isInManualWindow(int X, int Y) {
 	if (X < 1320 || X>1770 || Y < 420 || Y>870) return 0;
 	int Manualblank = 75;
 	return (Y - 420) / Manualblank * 2 + ((X - 1320) / 225)+1;
+}
+bool View::isInManualNextMoveButton(int X, int Y) {
+	return ManualNextMoveButton.getGlobalBounds().contains(X, Y);
+}
+bool View::isInManualPreviousMoveButton(int X, int Y) {
+	return ManualPreviousMoveButton.getGlobalBounds().contains(X, Y);
+}
+bool View::isInManualPlayButton(int X, int Y, int isManualPlay) {
+	if (isManualPlay) {
+		return ManualPauseButton.getGlobalBounds().contains(X, Y);
+	}
+	else {
+		return ManualPauseButton.getGlobalBounds().contains(X, Y);
+	}
 }

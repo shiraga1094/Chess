@@ -46,6 +46,10 @@ private:
     sf::Text Manualtext;
     sf::CircleShape ManualButton;
     sf::RectangleShape ManualChosen;
+    sf::Texture ManualNextMove;
+    sf::Texture ManualPreviousMove;
+    sf::Texture ManualPlayButton;
+    sf::Texture ManualPauseButton;
 
 public:
     PieceInput();
@@ -72,6 +76,10 @@ public:
     std::vector<sf::Text> GetManualtext(int N);
     sf::CircleShape GetManualButton();
     sf::RectangleShape GetManualChosen();
+    sf::Sprite GetManualNextMoveButton();
+    sf::Sprite GetManualPreviousButton();
+    sf::Sprite GetManualPlayButton();
+    sf::Sprite GetManualPauseButton();
 };
 
 #endif

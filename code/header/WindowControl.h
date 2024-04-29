@@ -2,6 +2,8 @@
 #include "View.h"
 #include "GameControl.h"
 #include "csmControl.h"
+#include <windows.h>
+#include <time.h>
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -34,7 +36,9 @@ private:
 	int ManualID;
 	int ManualsetID, Manualscroll, preManualsetID;
 	int fakeManualscroll;
+	int isManualPlay;
 	int selfmove;
+	double preClock;
 	std::vector<csmData> csmManual;
 	StatusID status;
 	ID promotionID;
@@ -49,6 +53,7 @@ public:
 	void PromotionWindow();
 	void isMouseButtonPressed(sf::Event event);
 	void isMouseButtonReleased(sf::Event event);
+	void ManualPlay();
 	void MouseDrag(sf::Event event);
 	void Draw();
 };

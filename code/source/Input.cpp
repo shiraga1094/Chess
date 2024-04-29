@@ -82,6 +82,10 @@ PieceInput::PieceInput() {
 	ManualButton.setFillColor(sf::Color(126, 192, 238));
 	ManualChosen =  sf::RectangleShape(sf::Vector2f(225, 75));
 	ManualChosen.setFillColor(sf::Color(211, 211, 211));
+	ManualNextMove.loadFromFile("img/ManualNextMove.png");
+	ManualPreviousMove.loadFromFile("img/ManualPreviousMove.png");
+	ManualPlayButton.loadFromFile("img/ManualPlay.png");
+	ManualPauseButton.loadFromFile("img/ManualPause.png");
 }
 sf::Sprite PieceInput::GetBoard() {
 	return sf::Sprite(Board_Texture);
@@ -231,4 +235,16 @@ sf::CircleShape PieceInput::GetManualButton() {
 }
 sf::RectangleShape PieceInput::GetManualChosen() {
 	return ManualChosen;
+}
+sf::Sprite PieceInput::GetManualNextMoveButton() {
+	return sf::Sprite(ManualNextMove);
+}
+sf::Sprite PieceInput::GetManualPreviousButton() {
+	return sf::Sprite(ManualPreviousMove);
+}
+sf::Sprite PieceInput::GetManualPlayButton() {
+	return sf::Sprite(ManualPlayButton);
+}
+sf::Sprite PieceInput::GetManualPauseButton() {
+	return sf::Sprite(ManualPauseButton);
 }
