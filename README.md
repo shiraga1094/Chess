@@ -13,7 +13,13 @@
 ![MoveHint](https://github.com/kevin101094/Chess/assets/88360083/da343886-95c1-4b1c-9551-b44444689293)
 
 ## ScreenShot
+### Version 1.0
 ![Screenshot1](https://github.com/kevin101094/Chess/assets/88360083/06766d52-0cb5-408b-b814-28282cdbcbf9)
 ![Screenshot2](https://github.com/kevin101094/Chess/assets/88360083/997a8d56-dbcb-4977-be56-5b4d02d6db85)
 ![Screenshot3](https://github.com/kevin101094/Chess/assets/88360083/1570d27a-2fb7-49e2-a6b4-821e27770415)
 ![Screenshot4](https://github.com/kevin101094/Chess/assets/88360083/57fbbd7f-d247-403b-a453-83af11aaaf08)
+
+### Version 1.1
+> Update: Notation automatically play function
+
+![Screenshot6](https://github.com/kevin101094/Chess/assets/88360083/820e916b-3b48-48b3-9421-3b801ae7164e)
