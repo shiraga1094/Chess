@@ -146,6 +146,7 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 			for (int i = 0; i < selfmove; i++)
 				game->Undo();
 			selfmove = 0;
+			status = Start;
 			ManualsetID--;
 			if (ManualsetID <= 0 and Manualscroll>0) {
 				Manualscroll--;
