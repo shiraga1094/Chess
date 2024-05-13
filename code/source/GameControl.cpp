@@ -109,6 +109,8 @@ bool Game::isPromotion() {
 }
 void Game::Promotion(int X, int Y, ID id) {
 	Board->Promotion(X, Y, id);
+	_isWhiteWin = _isBlackWin = -1;
+	_isWhiteChecked = _isBlackChecked = -1;
 }
 void Game::ManualMove(std::string MOVE) {
 	std::vector<int> pos;

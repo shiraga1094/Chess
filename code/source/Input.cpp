@@ -86,12 +86,28 @@ PieceInput::PieceInput() {
 	ManualPreviousMove.loadFromFile("img/ManualPreviousMove.png");
 	ManualPlayButton.loadFromFile("img/ManualPlay.png");
 	ManualPauseButton.loadFromFile("img/ManualPause.png");
+	TutorialButton.loadFromFile("img/Tutorial.png");
+	TutorialBoard.loadFromFile("img/TutorialBoard.png");
+	PieceTutorial.loadFromFile("img/PieceTutorial.png");
+	PieceSpecialMove.loadFromFile("img/PieceSpecialMove.png");
+	RuleTutorial.loadFromFile("img/RuleTutorial.png");
+	PawnFirstMove.loadFromFile("img/PawnFirstMove.png");
+	Enpassant.loadFromFile("img/Enpassant.png");
+	Promotion.loadFromFile("img/Promotion.png");
+	Castling.loadFromFile("img/Castling.png");
+	Check.loadFromFile("img/Check.png");
+	CheckMate.loadFromFile("img/CheckMate.png");
+	StaleMate.loadFromFile("img/StaleMate.png");
+	MoveRule.loadFromFile("img/50MoveRule.png");
 }
 sf::Sprite PieceInput::GetBoard() {
 	return sf::Sprite(Board_Texture);
 }
 sf::Sprite PieceInput::GetRotateBoard() {
 	return sf::Sprite(RotateBoard_Texture);
+}
+sf::Sprite PieceInput::GetTutorialBoard() {
+	return sf::Sprite(TutorialBoard);
 }
 sf::Sprite PieceInput::GetRotateArrow() {
 	return sf::Sprite(Rotate_Arrow);
@@ -247,4 +263,30 @@ sf::Sprite PieceInput::GetManualPlayButton() {
 }
 sf::Sprite PieceInput::GetManualPauseButton() {
 	return sf::Sprite(ManualPauseButton);
+}
+sf::Sprite PieceInput::GetTutorialButton() {
+	return sf::Sprite(TutorialButton);
+}
+std::vector<sf::Sprite> PieceInput::GetListButton() {
+	std::vector<sf::Sprite> tmp;
+	tmp.push_back(sf::Sprite(PieceTutorial));
+	tmp.push_back(sf::Sprite(PieceSpecialMove));
+	tmp.push_back(sf::Sprite(RuleTutorial));
+	return tmp;
+}
+std::vector<sf::Sprite> PieceInput::GetSpecialMoveButton() {
+	std::vector<sf::Sprite> tmp;
+	tmp.push_back(sf::Sprite(PawnFirstMove));
+	tmp.push_back(sf::Sprite(Enpassant));
+	tmp.push_back(sf::Sprite(Promotion));
+	tmp.push_back(sf::Sprite(Castling));
+	return tmp;
+}
+std::vector<sf::Sprite> PieceInput::GetRuleButton() {
+	std::vector<sf::Sprite> tmp;
+	tmp.push_back(sf::Sprite(Check));
+	tmp.push_back(sf::Sprite(CheckMate));
+	tmp.push_back(sf::Sprite(StaleMate));
+	tmp.push_back(sf::Sprite(MoveRule));
+	return tmp;
 }

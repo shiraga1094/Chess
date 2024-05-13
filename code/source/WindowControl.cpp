@@ -12,6 +12,7 @@ WindowControl::WindowControl(sf::RenderWindow& window):MainWindow(window){
 	PieceBx = PieceBy = PiecetoX = PiecetoY = NULL;
 	PiecePosBx = PiecePosBy = NULL;
 	isManualPlay = -1;
+	istutorialopen = 0;
 }
 void WindowControl::Init() {
 	Game *oldgame = game;
@@ -50,11 +51,16 @@ StatusID WindowControl::Run() {
 			isManualPlay = 0;
 			status = Start;
 		}
+		if (istutorialopen) {
+			istutorialopen = tutorialcontrol->Run();
+		}
 		MouseHoldEvent();
-		if (isManualPlay==1) ManualPlay();
-		MainWindow.clear(sf::Color(255, 199, 142, 1));
-		Draw();
-		MainWindow.display();
+		if (MainWindow.hasFocus()) {
+			if (isManualPlay == 1) ManualPlay();
+			MainWindow.clear(sf::Color(255, 199, 142, 1));
+			Draw();
+			MainWindow.display();
+		}
 	}
 	return Exit;
 }
@@ -70,6 +76,7 @@ void WindowControl::PromotionWindow() {
 		SubWindow.display();
 	}
 	game->Promotion(PiecetoX, PiecetoY, promotionID);
+	Draw();
 }
 void WindowControl::isMouseButtonPressed(sf::Event event) {
 	int mouseX = sf::Mouse::getPosition(MainWindow).x;
@@ -101,6 +108,13 @@ void WindowControl::isMouseButtonPressed(sf::Event event) {
 	}
 	else if (view->isInInputButton(mouseX, mouseY)) {
 		status = CSM;
+		return;
+	}
+	else if (view->isInTutorialButton(mouseX, mouseY)) {
+		if (!istutorialopen) {
+			istutorialopen = 1;
+			TutorialWindow();
+		}
 		return;
 	}
 	else if (view->isInManualLeftButton(mouseX, mouseY)) {
@@ -470,4 +484,9 @@ void WindowControl::SubHoldEvent(sf::RenderWindow& SubWindow) {
 		}
 	}
 	if (ischosen) status = Start;
+}
+void WindowControl::TutorialWindow() {
+	TutorialControl* oldtutorial = tutorialcontrol;
+	tutorialcontrol = new TutorialControl();
+	delete oldtutorial;
 }

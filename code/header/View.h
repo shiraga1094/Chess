@@ -43,6 +43,9 @@ private:
 	sf::Sprite ManualPlayButton, ManualPauseButton;
 	sf::RectangleShape ManualPlaybg;
 
+	sf::Sprite TutorialButton;
+	sf::RectangleShape TutorialBg;
+
 public:
 	View(sf::RenderWindow&, Game*);
 	void Init(bool isRotate);
@@ -67,6 +70,7 @@ public:
 	bool isInManualNextMoveButton(int X, int Y);
 	bool isInManualPreviousMoveButton(int X, int Y);
 	bool isInManualPlayButton(int X, int Y, int isManaulPlay);
+	bool isInTutorialButton(int X, int Y);
 };
 
 #endif

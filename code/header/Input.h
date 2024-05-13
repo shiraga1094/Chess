@@ -51,10 +51,25 @@ private:
     sf::Texture ManualPlayButton;
     sf::Texture ManualPauseButton;
 
+    sf::Texture TutorialButton;
+    sf::Texture TutorialBoard;
+    sf::Texture PieceTutorial;
+    sf::Texture PieceSpecialMove;
+    sf::Texture RuleTutorial;
+    sf::Texture PawnFirstMove;
+    sf::Texture Enpassant;
+    sf::Texture Promotion;
+    sf::Texture Castling;
+    sf::Texture Check;
+    sf::Texture CheckMate;
+    sf::Texture StaleMate;
+    sf::Texture MoveRule;
+
 public:
     PieceInput();
     sf::Sprite GetBoard();
     sf::Sprite GetRotateBoard();
+    sf::Sprite GetTutorialBoard();
     sf::Sprite GetRotateArrow();
     sf::Sprite GetInputButton();
     sf::RectangleShape GetCommandWindow();
@@ -80,6 +95,11 @@ public:
     sf::Sprite GetManualPreviousButton();
     sf::Sprite GetManualPlayButton();
     sf::Sprite GetManualPauseButton();
+
+    sf::Sprite GetTutorialButton();
+    std::vector<sf::Sprite> GetListButton();
+    std::vector<sf::Sprite> GetSpecialMoveButton();
+    std::vector<sf::Sprite> GetRuleButton();
 };
 
 #endif

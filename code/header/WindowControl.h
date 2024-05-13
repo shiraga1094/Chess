@@ -2,6 +2,7 @@
 #include "View.h"
 #include "GameControl.h"
 #include "csmControl.h"
+#include "TutorialControl.h"
 #include <windows.h>
 #include <time.h>
 #include <iostream>
@@ -29,6 +30,8 @@ private:
 	Game* game;
 	View* view;
 	csmControl* csmcontrol;
+	TutorialControl* tutorialcontrol;
+	bool istutorialopen;
 	bool isRotate;
 	bool isMouseHold, isDrag, isChosen;
 	float PiecePosBx, PiecePosBy;
@@ -47,10 +50,11 @@ private:
 	void SubHoldEvent(sf::RenderWindow& SubWindow);
 
 public:
-	WindowControl(sf::RenderWindow&);
+	WindowControl(sf::RenderWindow& window);
 	void Init();
 	StatusID Run();
 	void PromotionWindow();
+	void TutorialWindow();
 	void isMouseButtonPressed(sf::Event event);
 	void isMouseButtonReleased(sf::Event event);
 	void ManualPlay();

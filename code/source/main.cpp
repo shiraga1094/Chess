@@ -1,5 +1,6 @@
 /*
-Designed by 竹北高中30630盧人豪
+Designed by Chu-pei Senior High School Student
+306 30 Kevin
 */
 #include <Windows.h>
 #include <iostream>

@@ -54,6 +54,12 @@ void View::Init(bool isRotate) {
 	ManualPauseButton.setScale(0.1, 0.1);
 	ManualPlaybg = sf::RectangleShape(sf::Vector2f(65, 65));
 	ManualPlaybg.setPosition(1489, 881);
+
+	TutorialButton = input->GetTutorialButton();
+	TutorialButton.setScale(0.25, 0.25);
+	TutorialButton.setPosition(1720, 20);
+	TutorialBg = sf::RectangleShape(sf::Vector2f(73, 73));
+	TutorialBg.setPosition(1715, 15);
 }
 void View::Update(bool isRotate) {
 	BoardControl Board = game->getBoard();
@@ -215,6 +221,7 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 	ManualRightButton.setFillColor(sf::Color(126, 192, 238));
 	ManualNextMoveBg.setFillColor(sf::Color(0, 0, 0, 1));
 	ManualPreviousMoveBg.setFillColor(sf::Color(0, 0, 0, 1));
+	TutorialBg.setFillColor(sf::Color(0, 0, 0, 1));
 
 	if (isInResetButton(X, Y)) {
 		ResetButton.setFillColor(sf::Color(255, 231, 186));
@@ -229,11 +236,11 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 		if (isPressed and !isDrag) RotateBackground.setFillColor(sf::Color(190, 190, 190));
 		else RotateBackground.setFillColor(sf::Color(211, 211, 211));
 	}
-	if (isInInputButton(X, Y)) {
+	else if (isInInputButton(X, Y)) {
 		if (isPressed and !isDrag) InputBackground.setFillColor(sf::Color(190, 190, 190));
 		else InputBackground.setFillColor(sf::Color(211, 211, 211));
 	}
-	if (isInManualLeftButton(X, Y)) {
+	else if (isInManualLeftButton(X, Y)) {
 		if (isPressed and !isDrag) ManualLeftButton.setFillColor(sf::Color(108, 166, 205));
 		else ManualLeftButton.setFillColor(sf::Color(135, 206, 255));
 	}
@@ -249,6 +256,10 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 		if (isPressed and !isDrag) ManualPreviousMoveBg.setFillColor(sf::Color(190, 190, 190));
 		else ManualPreviousMoveBg.setFillColor(sf::Color(211, 211, 211));
 	}
+	else if (isInTutorialButton(X, Y)) {
+		if (isPressed and !isDrag) TutorialBg.setFillColor(sf::Color(190, 190, 190));
+		else TutorialBg.setFillColor(sf::Color(211, 211, 211));
+	}
 	MainWindow.draw(UndoButton);
 	MainWindow.draw(input->GetUndotxt());
 	MainWindow.draw(ResetButton);
@@ -261,8 +272,10 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 	MainWindow.draw(ManualRightButton);
 	MainWindow.draw(ManualNextMoveBg);
 	MainWindow.draw(ManualPreviousMoveBg);
+	MainWindow.draw(TutorialBg);
 	MainWindow.draw(ManualNextMoveButton);
 	MainWindow.draw(ManualPreviousMoveButton);
+	MainWindow.draw(TutorialButton);
 	
 }
 void View::DrawManaulPlayButton(int X, int Y, bool isPressed, int isManaulPlay) {
@@ -324,4 +337,7 @@ bool View::isInManualPlayButton(int X, int Y, int isManualPlay) {
 	else {
 		return ManualPauseButton.getGlobalBounds().contains(X, Y);
 	}
+}
+bool View::isInTutorialButton(int X, int Y) {
+	return TutorialButton.getGlobalBounds().contains(X, Y);
 }
