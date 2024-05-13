@@ -8,6 +8,9 @@ View::View(sf::RenderWindow& window, Game* game) : MainWindow(window){
 }
 void View::Init(bool isRotate) {
 	input = new PieceInput();
+	Tooltip* oldtip = tooltip;
+	tooltip = new Tooltip(MainWindow);
+	delete oldtip;
 	Update(isRotate);
 	Board = input->GetBoard();
 	MoveHint = input->GetMoveHint();
@@ -25,7 +28,7 @@ void View::Init(bool isRotate) {
 	InputBackground.setPosition(1195, 875);
 	for(int i=0; i<3; i++) PreviousSquare[i] = input->GetPreviousSquare();
 	PreviousSquare[2].setFillColor(sf::Color(207, 207, 207));
-	Message = input->GetMessage();
+	Message = input->GetMessagetext();
 	UndoButton = input->GetUndoButton();
 	ResetButton = input->GetResetButton();
 
@@ -226,39 +229,48 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 	if (isInResetButton(X, Y)) {
 		ResetButton.setFillColor(sf::Color(255, 231, 186));
 		if (isPressed and !isDrag) ResetButton.setFillColor(sf::Color(205, 186, 150));
+		if (!isDrag) tooltip->SetTooltip("Reset", 50);
 	}
 	else if (isInUndoButton(X, Y)) {
 		if (isPressed and !isDrag) UndoButton.setFillColor(sf::Color(205, 186, 150));
 		else UndoButton.setFillColor(sf::Color(255, 231, 186));
+		if (!isDrag) tooltip->SetTooltip("Undo", 50);
 	}
 	
 	if (isInRotateButton(X, Y)) {
 		if (isPressed and !isDrag) RotateBackground.setFillColor(sf::Color(190, 190, 190));
 		else RotateBackground.setFillColor(sf::Color(211, 211, 211));
+		if (!isDrag) tooltip->SetTooltip("Rotate Board", 50);
 	}
 	else if (isInInputButton(X, Y)) {
 		if (isPressed and !isDrag) InputBackground.setFillColor(sf::Color(190, 190, 190));
 		else InputBackground.setFillColor(sf::Color(211, 211, 211));
+		if (!isDrag) tooltip->SetTooltip("Input Notation", 50);
 	}
 	else if (isInManualLeftButton(X, Y)) {
 		if (isPressed and !isDrag) ManualLeftButton.setFillColor(sf::Color(108, 166, 205));
 		else ManualLeftButton.setFillColor(sf::Color(135, 206, 255));
+		if (!isDrag) tooltip->SetTooltip("Previous Page", 50);
 	}
 	else if (isInManualRightButton(X, Y)) {
 		if (isPressed and !isDrag) ManualRightButton.setFillColor(sf::Color(108, 166, 205));
 		else ManualRightButton.setFillColor(sf::Color(135, 206, 255));
+		if (!isDrag) tooltip->SetTooltip("Next Page", 50);
 	}
 	else if (isInManualNextMoveButton(X, Y)) {
 		if (isPressed and !isDrag) ManualNextMoveBg.setFillColor(sf::Color(190, 190, 190));
 		else ManualNextMoveBg.setFillColor(sf::Color(211, 211, 211));
+		if (!isDrag) tooltip->SetTooltip("Next Move", 50);
 	}
 	else if (isInManualPreviousMoveButton(X, Y)) {
 		if (isPressed and !isDrag) ManualPreviousMoveBg.setFillColor(sf::Color(190, 190, 190));
 		else ManualPreviousMoveBg.setFillColor(sf::Color(211, 211, 211));
+		if (!isDrag) tooltip->SetTooltip("Previous Move", 50);
 	}
 	else if (isInTutorialButton(X, Y)) {
 		if (isPressed and !isDrag) TutorialBg.setFillColor(sf::Color(190, 190, 190));
 		else TutorialBg.setFillColor(sf::Color(211, 211, 211));
+		if (!isDrag) tooltip->SetTooltip("Tutorial", 50);
 	}
 	MainWindow.draw(UndoButton);
 	MainWindow.draw(input->GetUndotxt());
@@ -276,7 +288,7 @@ void View::DrawButton(int X, int Y, bool isPressed, bool isDrag) {
 	MainWindow.draw(ManualNextMoveButton);
 	MainWindow.draw(ManualPreviousMoveButton);
 	MainWindow.draw(TutorialButton);
-	
+	tooltip->Draw();
 }
 void View::DrawManaulPlayButton(int X, int Y, bool isPressed, int isManaulPlay) {
 	if (isManaulPlay == -1) return;
@@ -288,10 +300,13 @@ void View::DrawManaulPlayButton(int X, int Y, bool isPressed, int isManaulPlay) 
 	MainWindow.draw(ManualPlaybg);
 	if (isManaulPlay==1) {
 		MainWindow.draw(ManualPauseButton);
+		if(isInManualPlayButton(X,Y,isManaulPlay)) tooltip->SetTooltip("Pause", 50);
 	}
 	else {
 		MainWindow.draw(ManualPlayButton);
+		if(isInManualPlayButton(X,Y,isManaulPlay)) tooltip->SetTooltip("Play", 50);
 	}
+	tooltip->Draw();
 }
 std::vector<sf::Sprite>& View::getSpriteItem() {
 	return SpriteItem;

@@ -118,7 +118,7 @@ sf::Sprite PieceInput::GetInputButton() {
 sf::Text PieceInput::GetPlayerTurnText() {
 	return PlayerTurnText;
 }
-sf::Text PieceInput::GetMessage() {
+sf::Text PieceInput::GetMessagetext() {
 	return Message;
 }
 sf::Sprite PieceInput::GetSprite(ID piece) {

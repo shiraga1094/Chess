@@ -32,6 +32,7 @@ public:
 	void MouseHoldEvent(sf::RenderWindow& csmWindow);
 	void isMouseButtonPressed(sf::RenderWindow& csmWindow, sf::Event event);
 	void Draw(sf::RenderWindow& csmWindow);
+	void End();
 };
 
 

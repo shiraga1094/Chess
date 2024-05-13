@@ -1,10 +1,13 @@
 #include "csmView.h"
 
-csmView::csmView(){
+csmView::csmView(sf::RenderWindow& window): csmwindow(window){
 	font.loadFromFile("arial.ttf");
 	csmFileList = sf::RectangleShape(sf::Vector2f(1000, 800));
 	csmFileList.setPosition(100, 300);
 	csmFileList.setFillColor(sf::Color(255, 235, 205));
+	Tooltip* oldtip = tooltip;
+	tooltip = new Tooltip(csmwindow);
+	delete oldtip;
 
 	for (int i = 0; i < blankamount; i++) {
 		csmListBlank[i] = sf::RectangleShape(sf::Vector2f(796, 46));
@@ -30,9 +33,8 @@ csmView::csmView(){
 	DownButton.setPosition(975, BeginblankY + blankgap * 10);
 	
 }
-void csmView::Draw(sf::RenderWindow& csmwindow, int fakeChosen, int X, int Y, bool isPressed) {
+void csmView::Draw(int fakeChosen, int X, int Y, bool isPressed) {
 	csmwindow.draw(csmFileList);
-
 	UpButton.setFillColor(sf::Color(126, 192, 238));
 	if (inUpButton(X, Y)) {
 		if (isPressed) UpButton.setFillColor(sf::Color(108, 166, 205));
@@ -96,4 +98,7 @@ void csmView::UpdateFileList(std::vector<std::string> filename, int scrollcnt) {
 		}
 	}
 
+}
+void csmView::End() {
+	delete tooltip;
 }

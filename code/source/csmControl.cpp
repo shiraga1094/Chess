@@ -3,9 +3,6 @@
 csmControl::csmControl(Game* game){
 	this->game = game;
 	path = "./Notation/ChessNotation.csm";
-	csmView* oldview = csmview;
-	csmview = new csmView();
-	delete oldview;
 	scrollcnt = ChosenID = 0;
 	scorllX = scrollY = 0;
 	filename = {};
@@ -63,6 +60,9 @@ void csmControl::FileInput() {
 int csmControl::Run(sf::RenderWindow& csmWindow) {
 	isChosen = isClosed = 0;
 	csmWindow.requestFocus();
+	csmView* oldview = csmview;
+	csmview = new csmView(csmWindow);
+	delete oldview;
 	while (!isChosen and !isClosed) {
 		MouseHoldEvent(csmWindow);
 		csmview->UpdateFileList(filename, scrollcnt);
@@ -125,5 +125,8 @@ void csmControl::isMouseButtonPressed(sf::RenderWindow& csmWindow, sf::Event eve
 void csmControl::Draw(sf::RenderWindow& csmWindow) {
 	int mouseX = sf::Mouse::getPosition(csmWindow).x;
 	int mouseY = sf::Mouse::getPosition(csmWindow).y;
-	csmview->Draw(csmWindow, fakeChosen, mouseX, mouseY, isPressed);
+	csmview->Draw(fakeChosen, mouseX, mouseY, isPressed);
+}
+void csmControl::End() {
+	delete csmview;
 }

@@ -80,7 +80,7 @@ public:
     sf::Sprite GetSprite(ID piece);
     sf::CircleShape GetMoveHint();
     sf::Text GetPlayerTurnText();
-    sf::Text GetMessage();
+    sf::Text GetMessagetext();
     sf::RectangleShape GetUndoButton();
     sf::RectangleShape GetResetButton();
     sf::Text GetUndotxt();

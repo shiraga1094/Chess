@@ -2,6 +2,7 @@
 #define _VIEW_H_
 #include <SFML/Graphics.hpp>
 #include "Input.h"
+#include "Tooltip.h"
 #include "ID.h"
 #include "GameControl.h"
 #include "csmControl.h"
@@ -13,6 +14,7 @@
 class View {
 private:
 	PieceInput* input;
+	Tooltip* tooltip;
 	Game* game;
 	sf::RenderWindow& MainWindow;
 	sf::Sprite Board;

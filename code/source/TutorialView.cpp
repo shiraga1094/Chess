@@ -2,6 +2,9 @@
 #define pair std::pair<int,int>
 
 TutorialView::TutorialView(sf::RenderWindow& window):TutorialWindow(window) {
+	Tooltip* oldtip = tooltip;
+	tooltip = new Tooltip(TutorialWindow);
+	delete oldtip;
 	input = new PieceInput();
 	Board = input->GetTutorialBoard();
 	Board.setScale(0.9, 0.9);
@@ -62,6 +65,14 @@ void TutorialView::DrawButton(int X, int Y, bool isPressed) {
 		}
 		TutorialWindow.draw(listButton[i]);
 	}
+	for (int i = 0; i < 3; i++) {
+		if (isInListButton(X, Y, i)) {
+			if (i == 0) tooltip->SetTooltip("PieceTutorial", 50);
+			else if (i == 1) tooltip->SetTooltip("PieceSpecialMove", 50);
+			else if (i == 2) tooltip->SetTooltip("RuleTutorial", 50);
+		}
+	}
+	tooltip->Draw();
 }
 void TutorialView::DrawPieceTutorial(int X, int Y, bool isPressed, ID pieceID) {
 	DrawPieceButton(X, Y, isPressed);
@@ -148,7 +159,18 @@ void TutorialView::DrawPieceButton(int X, int Y, bool isPressed) {
 	TutorialWindow.draw(ButtonBg);
 	for (int i = 0; i < 6; i++) {
 		TutorialWindow.draw(PieceButton[i]);
+		if (isInPieceButton(X, Y, i)) {
+			switch (i) {
+				case 0: tooltip->SetTooltip("Pawn", 50); break;
+				case 1: tooltip->SetTooltip("Knight", 50); break;
+				case 2: tooltip->SetTooltip("Bishop", 50); break;
+				case 3: tooltip->SetTooltip("Rook", 50); break;
+				case 4: tooltip->SetTooltip("Queen", 50); break;
+				case 5: tooltip->SetTooltip("King", 50); break;
+			}
+		}
 	}
+	tooltip->Draw();
 }
 void TutorialView::DrawPieceSpecialMove(int X, int Y, bool isPressed, int ID) {
 	DrawSpecialMoveButton(X, Y, isPressed);
@@ -230,7 +252,16 @@ void TutorialView::DrawSpecialMoveButton(int X, int Y, bool isPressed) {
 	TutorialWindow.draw(ButtonBg);
 	for (int i = 0; i < 4; i++) {
 		TutorialWindow.draw(SpecialMoveButton[i]);
+		if (isInSpecialMoveButton(X, Y, i)) {
+			switch (i) {
+			case 0: tooltip->SetTooltip("Pawn--FirstMove", 50); break;
+			case 1: tooltip->SetTooltip("Pawn--Enpassant", 50); break;
+			case 2: tooltip->SetTooltip("Pawn--Promotion", 50); break;
+			case 3: tooltip->SetTooltip("Castling", 50); break;
+			}
+		}
 	}
+	tooltip->Draw();
 }
 void TutorialView::DrawRuleTutorial(int X, int Y, bool isPressed, int ID) {
 	DrawRuleButton(X, Y, isPressed);
@@ -343,7 +374,16 @@ void TutorialView::DrawRuleButton(int X, int Y, bool isPressed) {
 	TutorialWindow.draw(ButtonBg);
 	for (int i = 0; i < 4; i++) {
 		TutorialWindow.draw(RuleButton[i]);
+		if (isInRuleButton(X, Y, i)) {
+			switch (i) {
+			case 0: tooltip->SetTooltip("Check", 50); break;
+			case 1: tooltip->SetTooltip("CheckMate", 50); break;
+			case 2: tooltip->SetTooltip("StaleMate", 50); break;
+			case 3: tooltip->SetTooltip("50MoveRule", 50); break;
+			}
+		}
 	}
+	tooltip->Draw();
 }
 bool TutorialView::isInListButton(int X, int Y, int ID) {
 	return listButton[ID].getGlobalBounds().contains(X, Y);

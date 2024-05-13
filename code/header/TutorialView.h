@@ -6,12 +6,14 @@
 #include <utility>
 #include "ID.h"
 #include "Input.h"
+#include "Tooltip.h"
 
 class TutorialView {
 private:
 	const float BeginX = 10;
 	const float BeginY = 10;
 	const float gap = 131;
+	Tooltip* tooltip;
 	sf::RenderWindow& TutorialWindow;
 	PieceInput* input;
 	sf::Sprite Board;
